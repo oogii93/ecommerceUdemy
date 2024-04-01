@@ -30,6 +30,14 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+
+
+        $notification =array(
+            'message'=>'Login successfully',
+            'alert-type'=>'success',
+
+        );
+
         /// end herwee nohtsol shalgaad admin bol admin dashboardruu/ vendor bol vendor/dashboardruu user bol user/dashboardruu orohiig zaaj baina
         //ene role deer mash chuhal sain oilgoh!!!!!!!
         $url='';
@@ -46,7 +54,7 @@ class AuthenticatedSessionController extends Controller
             $url='/dashboard';
         }
 
-        return redirect()->intended($url);
+        return redirect()->intended($url)->with($notification);
     }
 
     /**

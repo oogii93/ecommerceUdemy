@@ -4,6 +4,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\Backend\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,12 +24,43 @@ use App\Http\Controllers\VendorController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('frontend.index');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/dashboard' ,[UserController::class, 'UserDashboard'])
+    ->name('dashboard');
+    Route::post('/user/profile/dashboard' ,[UserController::class, 'UserProfileStore'])
+    ->name('user.profile.store');
+    Route::get('/user/logout' ,[UserController::class, 'UserLogout'])
+    ->name('user.logout');
+
+    Route::post('/user/update/password' ,[UserController::class, 'UserUpdatePassword'])
+    ->name('user.update.password');
+
+
+
+
+
+
+
+
+
+
+
+});// group middleware end
+
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -50,24 +84,77 @@ Route::middleware(['auth','role:admin'])->group(function () {
         ->name('admin.profile.store');
     Route::get('/admin/change/password' ,[AdminController::class, 'AdminChangePassword'])
         ->name('admin.change.password');
-
-
-
-
-
+    Route::post('/admin/update/password' ,[AdminController::class, 'AdminUpdatePassword'])
+        ->name('update.password');
 
 });
-
-
-
-
 
 //vendor
 
 Route::middleware(['auth','role:vendor'])->group(function () {
         Route::get('/vendor/dashboard' ,[VendorController::class, 'VendorDashboard'])
         ->name('vendor.dashboard');
+
+        Route::get('/vendor/logout', [VendorController::class, 'VendorDestroy'])
+        ->name('vendor.logout');
+
+        Route::get('/vendor/profile' ,[VendorController::class, 'VendorProfile'])
+        ->name('vendor.profile');
+         Route::post('/vendor/profile/store' ,[VendorController::class, 'VendorProfileStore'])
+        ->name('vendor.profile.store');
+
+        Route::get('/vendor/change/password' ,[VendorController::class, 'VendorChangePassword'])
+        ->name('vendor.change.password');
+
+    Route::post('/vendor/update/password' ,[VendorController::class, 'VendorUpdatePassword'])
+        ->name('vendor.update.password');
+
+
 });
 
 
 Route::get('admin/login',[AdminController::class ,'AdminLogin']);
+
+Route::get('vendor/login',[VendorController::class ,'VendorLogin']);
+
+
+
+
+//brand group route
+//route gaduur bash admin roletei middleware oruulaad zowhon admin ene routeruu newterch bolohoor
+
+Route::middleware(['auth','role:admin'])->group(function () {
+
+                //brand all route
+            Route::controller(BrandController::class)->group(function()
+            {
+                Route::get('/all/brand', 'AllBrand')->name('all.brand');
+                Route::get('/add/brand', 'AddBrand')->name('add.brand');
+                Route::post('/store/brand', 'StoreBrand')->name('store.brand');
+                Route::get('/edit/brand/{id}', 'EditBrand')->name('edit.brand');
+                Route::post('/update/brand', 'UpdateBrand')->name('update.brand');
+                Route::get('/delete/brand/{id}', 'DeleteBrand')->name('delete.brand');
+             });
+
+             //category all route
+            Route::controller(CategoryController::class)->group(function()
+            {
+                Route::get('/all/category', 'AllCategory')->name('all.category');
+                Route::get('/add/category', 'AddCategory')->name('add.category');
+                Route::post('/store/category', 'StoreCategory')->name('store.category');
+                Route::get('/edit/category/{id}', 'EditCategory')->name('edit.category');
+                Route::post('/update/category', 'UpdateCategory')->name('update.category');
+                Route::get('/delete/category/{id}', 'DeleteCategory')->name('delete.category');
+             });
+
+
+
+
+
+
+
+
+
+
+});//end middleware
+
