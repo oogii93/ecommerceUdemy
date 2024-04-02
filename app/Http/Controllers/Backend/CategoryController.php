@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -123,25 +124,22 @@ class CategoryController extends Controller
 
     }
 
+    public function DeleteCategory($id){
 
-    public function DeleteBrand($id)
-    {
-        $brand=Category::findOrFail($id);
-        $img=$brand->category_image;
-        unlink($img);
+        $category = Category::findOrFail($id);
+        $img = $category->category_image;
+        unlink($img );
 
         Category::findOrFail($id)->delete();
+
         $notification = array(
-            'message' => 'Category deleted Successfully',
+            'message' => 'Category Deleted Successfully',
             'alert-type' => 'success'
         );
 
-            return redirect()->route('all.category')->with($notification);
+        return redirect()->back()->with($notification);
 
-
-
-
-    }
+    }// End Method
 
 
 

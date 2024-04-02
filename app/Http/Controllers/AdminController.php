@@ -104,6 +104,79 @@ class AdminController extends Controller
     }
 
 
+    public function InactiveVendor()
+    {
+
+        //ene controlliiig sain har sain oilgo
+        $inActiveVendor = User::where('status','inactive')->where('role','vendor')
+        ->latest()->get();
+
+        return view('backend.vendor.inactive_vendor', compact('inActiveVendor'));
+    }
+    public function ActiveVendor()
+    {
+
+        //ene controlliiig sain har sain oilgo
+        $ActiveVendor = User::where('status','active')->where('role','vendor')
+        ->latest()->get();
+
+        return view('backend.vendor.active_vendor', compact('ActiveVendor'));
+    }
+    public function InactiveVendorDetails($id)
+    {
+        $inactiveVendorDetails=User::findOrFail($id);
+        return view('backend.vendor.inactive_vendor_details', compact('inactiveVendorDetails'));
+    }
+
+
+    public function ActiveVendorApprove(Request $request)
+    {
+
+        //form dotroo hidden id-g blade-ees ywuulaad teriigee end id gaar ni duudaad  olj bna
+
+        $vendor_id=$request->id;
+        $user=User::findOrFail($vendor_id)->update([
+            'status'=>'active',
+        ]);
+        $notification =array(
+            'message'=>'Vendor Active  successfully',
+            'alert-type'=>'success',
+
+        );
+        return redirect()->route('active.vendor')->with($notification);
+    }
+
+
+    public function ActiveVendorDetails($id)
+    {
+        $activeVendorDetails=User::findOrFail($id);
+        return view('backend.vendor.active_vendor_details', compact('activeVendorDetails'));
+    }
+
+
+    public function InActiveVendorApprove(Request $request)
+    {
+
+        //form dotroo hidden id-g blade-ees ywuulaad teriigee end id gaar ni duudaad  olj bna
+
+        $vendor_id=$request->id;
+        $user=User::findOrFail($vendor_id)->update([
+            'status'=>'inactive',
+        ]);
+        $notification =array(
+            'message'=>'Vendor InActive  successfully',
+            'alert-type'=>'success',
+
+        );
+        return redirect()->route('inactive.vendor')->with($notification);
+    }
+
+
+
+
+
+
+
 
 }
 

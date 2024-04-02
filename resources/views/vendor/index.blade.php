@@ -2,7 +2,24 @@
 
 @section('vendor')
 
+
+@php
+//newtersen hereglegchiin id gaar olj bna
+    $id=Auth::user()->id;
+    $vendorId=App\Models\User::find($id);
+    $status=$vendorId->status;//status gesen variableaar status databasetei holbogdoj bna
+
+@endphp
+
 <div class="page-content">
+
+    @if ($status==='active')
+    <h4>Vendor Account is <span class="text-success">Active</span></h4>
+    @else
+    <h4>Vendor Account is <span class="text-danger">InActive</span></h4>
+        <p class="text-danger"><b>Please wait admins approval</b></p>
+        <!--nohtsol shalgaad gargaj baina-->
+    @endif
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
         <div class="col">
