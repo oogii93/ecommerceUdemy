@@ -23,6 +23,11 @@
 	<link rel="stylesheet" href="{{ asset('adminbackend/assets/css/dark-theme.css') }}" />
 	<link rel="stylesheet" href="{{ asset('adminbackend/assets/css/semi-dark.css') }}" />
 	<link rel="stylesheet" href="{{ asset('adminbackend/assets/css/header-colors.css') }}" />
+    <link href="{{ asset('adminbackend/assets/plugins/input-tags/css/tagsinput.css') }}" rel="stylesheet" />
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 
     <!--toaster-->
 
@@ -85,6 +90,8 @@
 
 
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
 
 <script>
  @if(Session::has('message'))

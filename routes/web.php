@@ -1,14 +1,20 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\VendorController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubCategoryController;
-use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\VendorProductController;
+use App\Http\Controllers\Backend\BannerController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -112,13 +118,25 @@ Route::middleware(['auth','role:vendor'])->group(function () {
         ->name('vendor.update.password');
 
 
+        //news routes
+
+
+                //Vendor add product all route
+                Route::controller(VendorProductController::class)->group(function()
+                {
+                    Route::get('/vendor/all/product', 'VendorAllProduct')->name('vendor.all.product');
+                    Route::get('/vendor/add/product', 'VendorAddProduct')->name('vendor.add.product');
+
+                 });
+
+
 });
 
 
-Route::get('/admin/login',[AdminController::class ,'AdminLogin']);
+Route::get('/admin/login',[AdminController::class ,'AdminLogin'])->middleware(RedirectIfAuthenticated::class);
 
 Route::get('/vendor/login',[VendorController::class ,'VendorLogin'])
-->name('vendor.login');
+->name('vendor.login')->middleware(RedirectIfAuthenticated::class);
 
 Route::get('/become/vendor',[VendorController::class ,'BecomeVendor'])
 ->name('become.vendor');
@@ -194,14 +212,46 @@ Route::middleware(['auth','role:admin'])->group(function () {
             {
                 Route::get('/all/product', 'AllProduct')->name('all.product');
                 Route::get('/add/product', 'AddProduct')->name('add.product');
+                Route::post('/store/product', 'StoreProduct')->name('store.product');
+                Route::get('/edit/product/{id}', 'EditProduct')->name('edit.product');
+                Route::post('/update/product', 'UpdateProduct')->name('update.product');
+                Route::post('/update/product/thambnail', 'UpdateProductThambnail')->name('update.product.thambnail');
+                Route::post('/update/product/multiimage', 'UpdateProductMultiimage')->name('update.product.multiimage');
+                Route::get('/product/multiimg/delete/{id}', 'MultiImageDelete')->name('product.multiimg.delete');
+
+
+                Route::get('/product/inactive/{id}', 'ProductInactive')->name('product.inactive');
+                Route::get('/product/active/{id}', 'ProductActive')->name('product.active');
+                Route::get('/delete/product/{id}', 'ProductDelete')->name('delete.product');
+                Route::get('/delete/product/{id}', 'ProductDelete')->name('delete.product');
+                  });
 
 
 
+                      //category all route
+            Route::controller(SliderController::class)->group(function()
+            {
+                Route::get('/all/slider', 'AllSlider')->name('all.slider');
+                Route::get('/add/slider', 'AddSlider')->name('add.slider');
+                Route::post('/store/slider', 'StoreSlider')->name('store.slider');
+                Route::get('/edit/slider/{id}' , 'EditSlider')->name('edit.slider');
+                Route::post('/update/slider', 'UpdateSlider')->name('update.slider');
+
+                Route::get('/delete/slider/{id}', 'DeleteSlider')->name('delete.slider');
+ });
 
 
+                      //banner all route
+            Route::controller(BannerController::class)->group(function()
+            {
+                Route::get('/all/banner', 'AllBanner')->name('all.banner');
+                Route::get('/add/banner', 'AddBanner')->name('add.banner');
+                Route::post('/store/banner', 'StoreBanner')->name('store.banner');
+                Route::get('/edit/banner/{id}' , 'EditBanner')->name('edit.banner');
+                Route::post('/update/banner', 'UpdateBanner')->name('update.banner');
 
-             });
-
+                Route::get('/delete/banner/{id}', 'DeleteBanner')->name('delete.banner');
+ });
 
 
 

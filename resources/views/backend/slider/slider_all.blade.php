@@ -5,7 +5,7 @@
 <div class="page-content">
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">All SubCategory</div>
+        <div class="breadcrumb-title pe-3">All Slider</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
@@ -18,7 +18,7 @@
         <div class="ms-auto">
             <div class="btn-group">
 
-                <a href="{{ route('add.subcategory') }}" class="btn btn-primary">Add SubCategory</a>
+                <a href="{{ route('add.slider') }}" class="btn btn-primary">Add Slider</a>
 
 
             </div>
@@ -33,8 +33,9 @@
                     <thead>
                         <tr>
                             <th>Sl</th>
-                            <th>Category Name</th>
-                            <th>SubCategory Name</th>
+                            <th>Slider Title</th>
+                            <th>Short Title</th>
+                            <th>Slider image</th>
                             <th>Action</th>
 
                         </tr>
@@ -42,20 +43,18 @@
                     </thead>
              <tbody>
 
-                @foreach($subcategories as $key=> $item)
+                @foreach($sliders as $key=> $item)
 
                             <!--$brand brandiiig $item variableaar awahiig deer zaasan baina-->
+
                                 <tr>
                                     <td>{{ $key+1 }}</td>
-
-                                    <td>{{ $item['category']['category_name'] }}</td>
-                                    <!--model deer zaaj ogson category gesen relationshippee end duudaaad yuch awahaa zaaj ogch baina-->
-
-                                    <td>{{ $item->subcategory_name }}</td>
-
+                                    <td>{{ $item->slider_title }}</td>
+                                    <td>{{ $item->short_title }}</td>
+                                    <td><img src="{{ asset($item->slider_image) }}" style="width:70px; height:40px;"></td>
                                     <td>
-                                        <a href="{{ route('edit.subcategory',$item->id) }}" class="btn btn-info">Edit</a>
-                                        <a href="{{ route('delete.subcategory',$item->id) }}" class="btn btn-danger" id="delete">Delete</a>
+                                        <a href="{{ route('edit.slider',$item->id) }}" class="btn btn-info">Edit</a>
+                                        <a href="{{ route('delete.slider',$item->id) }}" class="btn btn-danger" id="delete">Delete</a>
                                     </td>
 
 
@@ -65,17 +64,7 @@
                  @endforeach
 
              </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>Sl</th>
-                            <th>Category name</th>
-                            <th>SubCategory Name</th>
 
-                            <th>Action</th>
-
-
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
         </div>

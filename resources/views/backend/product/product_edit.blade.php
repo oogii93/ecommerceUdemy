@@ -10,13 +10,13 @@
 
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Add new Product</div>
+        <div class="breadcrumb-title pe-3">Edit  Product</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Add New Product</li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit  Product</li>
                 </ol>
             </nav>
         </div>
@@ -26,12 +26,13 @@
 
   <div class="card">
 <div class="card-body p-4">
-<h5 class="card-title">Add New Product</h5>
+<h5 class="card-title">Edit  Product</h5>
 <hr/>
 
-<form id="myForm" method="post" action="{{ route('store.product') }}" enctype="multipart/form-data">
+<form id="myForm" method="post" action="{{ route('update.product') }}" >
 
     @csrf
+    <input type="hidden" name="id" value="{{ $products->id }}">
 <div class="form-body mt-4">
 <div class="row">
     <div class="col-lg-8">
@@ -42,51 +43,37 @@
 
     <div class=" form-group mb-3">
         <label for="inputProductTitle" class="form-label">Product name</label>
-        <input type="text" name="product_name" class="form-control" id="inputProductTitle" placeholder="Enter product title">
+        <input type="text" name="product_name" class="form-control" id="inputProductTitle" value="{{ $products->product_name }}">
         </div>
         <div class="mb-3">
             <label for="inputProductTitle" class="form-label">Product Tags</label>
-            <input type="text" name="product_tags" class="form-control visually-hidden" data-role="tagsinput" value="new product,top product">
+            <input type="text" name="product_tags" class="form-control visually-hidden" data-role="tagsinput" value="{{ $products->tags }}">
           </div>
 
 
         <div class="mb-3">
             <label for="inputProductTitle" class="form-label">Product Size</label>
-            <input type="text" name="product_size" class="form-control visually-hidden" data-role="tagsinput" value="Small,Medium,Large">
+            <input type="text" name="product_size" class="form-control visually-hidden" data-role="tagsinput" value="{{ $products->product_size }}">
           </div>
 
 
         <div class="mb-3">
             <label for="inputProductTitle" class="form-label">Product Color</label>
-            <input type="text" name="product_color" class="form-control visually-hidden" data-role="tagsinput" value="Red, Blue, White">
+            <input type="text" name="product_color" class="form-control visually-hidden" data-role="tagsinput" value="{{ $products->product_color }}">
           </div>
 
         <div  class="form-group mb-3">
             <label for="inputProductTitle" class="form-label">Short Description</label>
-                    <textarea name="short_descp" id="inputProductDescription" class="form-control" rows="3"></textarea>
+                    <textarea name="short_descp" id="inputProductDescription" class="form-control" rows="3">{{ $products->short_descp }}</textarea>
 
         </div>
         <div class="mb-3">
             <label for="inputProductTitle" class="form-label">Long Description</label>
-                    <textarea name="long_descp" id="inputProductDescription" class="form-control" rows="5"></textarea>
+                    <textarea name="long_descp" id="inputProductDescription" class="form-control" rows="5">{{ $products->long_descp }}</textarea>
 
         </div>
 
-        <div   class="form-group mb-3">
-            <label for="inputProductTitle" class="form-label">Main Thambnail</label>
-            <input name="product_thambnail" class="form-control" type="file" id="formFile" onChange="mainThamUrl(this)">
 
-            <img src="" id="mainThmb" alt="">
-          </div>
-
-
-          <div  class=" form-group mb-3">
-            <label for="inputProductTitle" class="form-label">Multiple Image</label>
-            <input class="form-control" name="multi_img[]" type="file" id="multiImg" multiple="">
-
-            <div class="row" id="preview_img">
-
-            </div>
           </div>
 
 
@@ -103,26 +90,27 @@
         <div class="row g-3">
         <div class="form-group col-md-6">
             <label for="inputPrice" class="form-label"> Product Price</label>
-            <input type="text" name="selling_price" class="form-control" id="inputPrice" placeholder="00.00">
+            <input type="text" name="selling_price" class="form-control" id="inputPrice" value="{{ $products->selling_price }}">
             </div>
             <div class="form-group col-md-6">
             <label for="inputCompareatprice" class="form-label">Discount Price</label>
-            <input type="text" name="discount_price"class="form-control" id="inputCompareatprice" placeholder="00.00">
+            <input type="text" name="discount_price"class="form-control" id="inputCompareatprice" value="{{ $products->discount_price }}">
             </div>
             <div class="form-group col-md-6">
             <label for="inputCostPerPrice" class="form-label">Product Code</label>
-            <input type="text" name="product_code" class="form-control" id="inputCostPerPrice" placeholder="00.00">
+            <input type="text" name="product_code" class="form-control" id="inputCostPerPrice" value="{{ $products->product_code }}">
             </div>
             <div class="form-group col-md-6">
             <label for="inputStarPoints" class="form-label">Product Quantity</label>
-            <input type="text" name="product_qty" class="form-control" id="inputStarPoints" placeholder="00.00">
+            <input type="text" name="product_qty" class="form-control" id="inputStarPoints" value="{{ $products->product_qty }}">
             </div>
             <div class="form-group col-12">
             <label for="inputProductType" class="form-label">Product Brand</label>
             <select name ="brand_id"class="form-select" id="inputProductType">
                 <option></option>
                 @foreach ($brands as $brand)
-                <option value="{{ $brand->id }}">{{ $brand->brand_name }}</option>
+                <!--ene foreachiig sain haraj oilgo   ene codeiin tailbar ni brand id ni $products aar damjuulaad brand_id (db table dotorh) taarch baiwal selectediig songono taarahgui bol hooson baina-->
+                <option value="{{ $brand->id }}" {{ $brand->id==$products->brand_id ? 'selected' :'' }}>{{ $brand->brand_name }}</option>
 
                 @endforeach
 
@@ -133,7 +121,7 @@
             <select name ="category_id" class="form-select" id="inputVendor">
                 <option></option>
                 @foreach ( $categories as $cat)
-                <option value="{{ $cat->id }}">{{ $cat->category_name }}</option>
+                <option value="{{ $cat->id }}" {{ $cat->id==$products->category_id ? 'selected' :'' }}>{{ $cat->category_name }}</option>
 
                 @endforeach
 
@@ -143,6 +131,10 @@
             <label for="inputCollection" class="form-label">Product SubCategory</label>
             <select name ="subcategory_id" class="form-select" id="inputCollection">
                 <option></option>
+                @foreach ( $subcategories as $subcat)
+                <option value="{{ $cat->id }}" {{ $subcat->id==$products->subcategory_id ? 'selected' :'' }}>{{ $subcat->subcategory_name }}</option>
+                @endforeach
+
 
                 </select>
             </div>
@@ -153,7 +145,7 @@
             <select name ="vendor_id" class="form-select" id="inputCollection">
                 <option></option>
                 @foreach ( $activeVendor as $vendor )
-                <option value="{{ $vendor->id }}">{{$vendor->name}}</option>
+                <option value="{{ $vendor->id }}"{{ $vendor->id==$products->vendor_id ? 'selected' :'' }}>{{$vendor->name}}</option>
 
                 @endforeach
 
@@ -167,13 +159,13 @@
 
     <div class="col-md-6">
     <div class="form-check">
-            <input class="form-check-input" name="hot_deals" type="checkbox" value="1" id="flexCheckDefault">
+            <input class="form-check-input" name="hot_deals" type="checkbox" value="1" id="flexCheckDefault"{{ $products->hot_deals ==1 ? 'checked' :'' }}>
             <label class="form-check-label" for="flexCheckDefault"> Hot Deals</label>
         </div>
     </div>
     <div class="col-md-6">
     <div class="form-check">
-            <input class="form-check-input" name="featured" type="checkbox" value="1" id="flexCheckDefault">
+            <input class="form-check-input" name="featured" type="checkbox" value="1" id="flexCheckDefault" {{ $products->featured ==1 ? 'checked' :'' }}>
             <label class="form-check-label" for="flexCheckDefault"> Featured</label>
         </div>
     </div>
@@ -181,13 +173,13 @@
 
     <div class="col-md-6">
     <div class="form-check">
-            <input class="form-check-input" name="special_offer" type="checkbox" value="1" id="flexCheckDefault">
+            <input class="form-check-input" name="special_offer" type="checkbox" value="1" id="flexCheckDefault"{{ $products->special_offer ==1 ? 'checked' :'' }}>
             <label class="form-check-label" for="flexCheckDefault"> Special Offer</label>
         </div>
     </div>
     <div class="col-md-6">
     <div class="form-check">
-            <input class="form-check-input" name="special_deals" type="checkbox" value="1" id="flexCheckDefault">
+            <input class="form-check-input" name="special_deals" type="checkbox" value="1" id="flexCheckDefault"{{ $products->special_deals ==1 ? 'checked' :'' }}>
             <label class="form-check-label" for="flexCheckDefault"> Special Deals</label>
         </div>
     </div>
@@ -206,10 +198,91 @@
 </div>
 </div>
 
-</form>
-  </div>
 
+
+<!-- /// Main Image Thambnail Update ////// -->
+
+<div class="page-content">
+	<h6 class="mb-0 text-uppercase">Update Main Image Thambnail </h6>
+	<hr>
+<div class="card">
+                    <form method="post" action="{{ route('update.product.thambnail') }}" enctype="multipart/form-data" >
+                            @csrf
+
+                    <input type="hidden" name="id" value="{{ $products->id }}">
+                    <input type="hidden" name="old_img" value="{{ $products->product_thambnail }}">
+
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Chose Thambnail Image </label>
+                            <input name="product_thambnail" class="form-control" type="file" id="formFile">
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label"> </label>
+                                <img src="{{ asset($products->product_thambnail) }}" style="width:100px; height:100px">
+                        </div>
+
+                    <input type="submit" class="btn btn-primary px-4" value="Save Changes" />
+
+                                </div>
+
+                            </form>
+
+			    </div>
+			</div>
+
+
+<!-- /// End Main Image Thambnail Update ////// -->
+
+
+<!-- /// Update Multi Image  ////// -->
+
+<div class="page-content">
+	<h6 class="mb-0 text-uppercase">Update Multi Image </h6>
+	<hr>
+<div class="card">
+<div class="card-body">
+	<table class="table mb-0 table-striped">
+		<thead>
+			<tr>
+				<th scope="col">#Sl</th>
+				<th scope="col">Image</th>
+				<th scope="col">Change Image </th>
+				<th scope="col">Delete </th>
+			</tr>
+		</thead>
+		<tbody>
+
+ <form method="post" action="{{ route('update.product.multiimage') }}" enctype="multipart/form-data" >
+			@csrf
+
+	@foreach($multiImgs as $key => $img)
+	<tr>
+		<th scope="row">{{ $key+1 }}</th>
+		<td> <img src="{{ asset($img->photo_name) }}" style="width:70; height: 40px;"> </td>
+		<td> <input type="file" class="form-group" name="multi_img[{{ $img->id }}]"> </td>
+		<td>
+	<input type="submit" class="btn btn-primary px-4" value="Update Image " />
+	<a href="{{ route('product.multiimg.delete',$img->id) }}" class="btn btn-danger" id="delete"> Delete </a>
+		</td>
+	</tr>
+	@endforeach
+
+		</form>
+		</tbody>
+	</table>
 </div>
+</div>
+</div>
+
+
+
+<!-- /// End Update Multi Image  ////// -->
+
+
+
 
 <script type="text/javascript">
     $(document).ready(function (){

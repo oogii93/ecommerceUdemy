@@ -1,5 +1,6 @@
-@extends('admin.admin_dashboard')
-@section('admin')
+@extends('vendor.vendor_dashboard')
+
+@section('vendor')
 
 
 
@@ -10,13 +11,13 @@
 
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Add new Product</div>
+        <div class="breadcrumb-title pe-3">Add VENDOR Product</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Add New Product</li>
+                    <li class="breadcrumb-item active" aria-current="page">Add Vendor Product</li>
                 </ol>
             </nav>
         </div>
@@ -148,17 +149,6 @@
             </div>
 
 
-            <div class="col-12">
-            <label for="inputCollection" class="form-label">Select Vendor</label>
-            <select name ="vendor_id" class="form-select" id="inputCollection">
-                <option></option>
-                @foreach ( $activeVendor as $vendor )
-                <option value="{{ $vendor->id }}">{{$vendor->name}}</option>
-
-                @endforeach
-
-                </select>
-            </div>
 
 
 <div class="col-12">
