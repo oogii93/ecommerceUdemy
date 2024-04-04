@@ -69,6 +69,8 @@
 
 
                                         @endphp
+
+
                                         <span class="badge rounded-pill bg-danger">{{ round($discount) }}%</span>
 
 

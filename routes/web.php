@@ -13,6 +13,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\Backend\BannerController;
+use App\Http\Controllers\Frontend\IndexController;
 
 
 
@@ -31,9 +32,14 @@ use App\Http\Controllers\Backend\BannerController;
 
 
 
-Route::get('/', function () {
-    return view('frontend.index');
-});
+// Route::get('/', function () {
+//     return view('frontend.index');
+// });
+Route::get('/' ,[IndexController::class, 'Index']);
+
+
+
+
 
 
 
@@ -265,4 +271,9 @@ Route::middleware(['auth','role:admin'])->group(function () {
 
 
 });//end middleware
+
+//front end Product details all route
+
+
+Route::get('/product/details/{id}/{slug}' ,[IndexController::class, 'ProductDetails']);
 
