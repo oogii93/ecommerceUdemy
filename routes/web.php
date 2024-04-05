@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\Backend\BannerController;
 use App\Http\Controllers\Frontend\IndexController;
+use App\Http\Controllers\Frontend\CartController;
 
 
 
@@ -276,4 +277,22 @@ Route::middleware(['auth','role:admin'])->group(function () {
 
 
 Route::get('/product/details/{id}/{slug}' ,[IndexController::class, 'ProductDetails']);
+
+
+Route::get('/vendor/details/{id}',[IndexController::class, 'VendorDetails'])->name('vendor.details');
+
+Route::get('/vendor/all',[IndexController::class, 'VendorAll'])->name('vendor.all');
+
+Route::get('/product/category/{id}/{slug}' ,[IndexController::class, 'CatWiseProduct']);
+
+Route::get('/product/subcategory/{id}/{slug}' ,[IndexController::class, 'SubCatWiseProduct']);
+
+//product Modal ajax route
+
+Route::get('/product/view/modal/{id}' ,[IndexController::class, 'ProductViewAjax']);
+
+//add to Cart store data
+Route::post('/cart/data/store/{id}' ,[CartController::class, 'AddToCart']);
+
+
 

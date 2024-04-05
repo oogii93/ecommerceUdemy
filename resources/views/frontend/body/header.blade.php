@@ -290,7 +290,7 @@
                             <ul>
 
                                 <li>
-                                    <a class="active" href="index.html">Home  </a>
+                                    <a class="active" href="{{ url('/') }}">Home  </a>
 
                                 </li>
 
@@ -303,7 +303,7 @@
                     @foreach ( $categories as $category)
 
                                 <li>
-                                    <a href="#">{{ $category->category_name }} <i class="fi-rs-angle-down"></i></a>
+                                    <a href="{{ url('product/category/'.$category->id.'/'.$category->category_slug) }}">{{ $category->category_name }} <i class="fi-rs-angle-down"></i></a>
                     @php
                     //data base deerh category table-ees bvgdiig ni end duudaj awana
 
@@ -314,7 +314,7 @@
 
                     @foreach ( $subcategories as $subcategory)
 
-                                        <li><a href="vendors-grid.html">{{ $subcategory->subcategory_name }}</a></li>
+                                        <li><a href="{{ url('product/subcategory/'.$subcategory->id.'/'.$subcategory->subcategory_slug) }}">{{ $subcategory->subcategory_name }}</a></li>
 
                                 @endforeach
 
